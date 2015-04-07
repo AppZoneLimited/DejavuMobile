@@ -1,0 +1,33 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "dejavu.appzonegroup.com.dejavuandroid"
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.google.android.gms:play-services:6.5.+'
+    compile files('libs/zoneorchestra.jar')
+    compile files('libs/jsevaluator.jar')
+    compile files('libs/core-3.0.0.jar')
+    compile files('libs/libphonenumber-7.0.2.jar')
+    compile 'com.koushikdutta.ion:ion:2.0.2'
+    compile files('libs/androrm.jar')
+    compile files('libs/commons-lang3-3.0.1.jar')
+}

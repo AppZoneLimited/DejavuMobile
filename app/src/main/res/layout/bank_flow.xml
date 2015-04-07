@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:gravity="center"
+    tools:context="dejavu.appzonegroup.com.dejavuandroid.Fragment.PhoneRegistration">
+
+
+    <TextView
+        android:text="@string/choice"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <Button
+        android:visibility="gone"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/soft_string"
+        android:id="@id/soft_choice"
+        android:layout_marginTop="38dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:visibility="gone"
+        android:layout_below="@id/soft_choice"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/hard_string"
+        android:id="@id/hard_choice"
+        android:layout_marginTop="38dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:visibility="gone"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/card_string"
+        android:id="@id/debit_choice"
+        android:layout_below="@id/hard_choice"
+        android:layout_marginTop="38dp"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
