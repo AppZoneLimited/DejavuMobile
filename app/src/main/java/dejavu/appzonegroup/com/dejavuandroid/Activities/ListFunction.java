@@ -28,6 +28,8 @@ import java.util.ArrayList;
 
 import dejavu.appzonegroup.com.dejavuandroid.DataBases.ClientFlows;
 import dejavu.appzonegroup.com.dejavuandroid.DataSynchronization.LocalEntityService;
+import dejavu.appzonegroup.com.dejavuandroid.Enums.ServiceUITypes;
+import dejavu.appzonegroup.com.dejavuandroid.Fragment.QrScannerFragment;
 import dejavu.appzonegroup.com.dejavuandroid.R;
 import dejavu.appzonegroup.com.dejavuandroid.ToastMessageHandler.ShowMessage;
 
@@ -44,6 +46,8 @@ public class ListFunction extends Fragment implements StepResultCallback {
     public static final String SERVICE_ENTITY = "Dejavu.ENTITY";
     public static final String SERVICE_GOTO = "Dejavu.GOTO";
     public static final String SERVICE_SCRIPT = "Dejavu.SCRIPT";
+
+
 
     private ArrayList<String> arrayListId;
 
@@ -110,10 +114,21 @@ public class ListFunction extends Fragment implements StepResultCallback {
         switch (serviceName){
             //TODO: go through on the script and goto
             case SERVICE_UI:
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.addToBackStack(null);
-                transaction.add(R.id.content_frame, new UiControlTrier().newInstance(step))
-                        .commitAllowingStateLoss();
+                //Init demo enum type of qrcode
+                ServiceUITypes sut = ServiceUITypes.QR_SCANNER;
+
+                //Checking if type of ui service is the QRCode scanner
+                if(sut == ServiceUITypes.ANYOTHERTYPE) {
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.addToBackStack(null);
+                    transaction.add(R.id.content_frame, new UiControlTrier().newInstance(step))
+                            .commitAllowingStateLoss();
+                }else{
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.content_frame, new QrScannerFragment(step, step.getStepAbstract()))
+                            .commitAllowingStateLoss();
+                }
                 break;
 
             case SERVICE_ENTITY:
