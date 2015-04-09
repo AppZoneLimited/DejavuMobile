@@ -13,25 +13,38 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appzone.zone.orchestra.engine.MobileFlow;
 import com.appzone.zone.orchestra.engine.datatypes.Step;
 import com.appzone.zone.orchestra.engine.datatypes.StepsAbstraction;
 import com.appzone.zone.orchestra.engine.interfaces.StepResultCallback;
+import com.appzone.zone.orchestra.engine.script.interpeter.JSInterpreterEngine;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import dejavu.appzonegroup.com.dejavuandroid.DataBases.ClientFlows;
+import dejavu.appzonegroup.com.dejavuandroid.DataSynchronization.LocalEntityService;
 import dejavu.appzonegroup.com.dejavuandroid.R;
+import dejavu.appzonegroup.com.dejavuandroid.ToastMessageHandler.ShowMessage;
 
 /**
  * Created by CrowdStar on 4/6/2015.
  */
 public class ListFunction extends Fragment implements StepResultCallback {
+    public static final String TAG = ListFunction.class.getSimpleName();
+
     public static String FUNCTION_KEY = "name";
     public static String FUNCTION_ID_KEY = "flow";
+
+    public static final String SERVICE_UI = "Dejavu.UI";
+    public static final String SERVICE_ENTITY = "Dejavu.ENTITY";
+    public static final String SERVICE_GOTO = "Dejavu.GOTO";
+    public static final String SERVICE_SCRIPT = "Dejavu.SCRIPT";
+
     private ArrayList<String> arrayListId;
 
     @Override
@@ -72,10 +85,11 @@ public class ListFunction extends Fragment implements StepResultCallback {
     }
 
     public void loadFlow(String JsonString) {
-//        new ShowMessage(getActivity(), JsonString, Toast.LENGTH_LONG);
+        new ShowMessage(getActivity(), JsonString, Toast.LENGTH_LONG);
         MobileFlow mf = new MobileFlow(JsonString); // Create flow object
         StepsAbstraction sa = mf.getstepAbstractionion(); // Returns an object
         Step initStep = sa.getNextStep();
+
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
         transaction.add(R.id.content_frame, new UiControlTrier().newInstance(initStep)).commitAllowingStateLoss();
@@ -92,6 +106,38 @@ public class ListFunction extends Fragment implements StepResultCallback {
     @Override
     public void onGetNextStep(Step step) {
         Log.e("OnStepResult", step.getStepId());
+        String serviceName = step.getServiceName();
+        switch (serviceName){
+            //TODO: go through on the script and goto
+            case SERVICE_UI:
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.addToBackStack(null);
+                transaction.add(R.id.content_frame, new UiControlTrier().newInstance(step))
+                        .commitAllowingStateLoss();
+                break;
+
+            case SERVICE_ENTITY:
+                //TODO: handles local entity service
+                JSONObject data = null;
+                try {
+                    data = step.getData();
+                } catch (JSONException e) {
+                    Log.e(TAG+"/StepEntity", e.getMessage());
+                }
+                LocalEntityService.startLocalEntityService(getActivity(), step.getCommandName(),
+                        data.toString());
+                break;
+
+            case SERVICE_SCRIPT:
+                //TODO handles both script interpreter I and II
+                JSInterpreterEngine jsEngine = new JSInterpreterEngine(getActivity());
+                jsEngine.evaluateScript().evaluate(step.getCommandName());
+                break;
+
+            case SERVICE_GOTO:
+                //TODO handles goto implementation
+                break;
+        }
     }
 }
 

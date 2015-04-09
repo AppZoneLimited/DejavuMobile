@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import dejavu.appzonegroup.com.dejavuandroid.Adapter.FunctionAdapter;
 import dejavu.appzonegroup.com.dejavuandroid.DataBases.Function;
 import dejavu.appzonegroup.com.dejavuandroid.DataBases.FunctionCategory;
-import dejavu.appzonegroup.com.dejavuandroid.R;
-import dejavu.appzonegroup.com.dejavuandroid.ToastMessageHandler.ShowMessage;
 import dejavu.appzonegroup.com.dejavuandroid.DataSynchronization.FlowSyncService;
 import dejavu.appzonegroup.com.dejavuandroid.DataSynchronization.ZoneDataUtils;
+import dejavu.appzonegroup.com.dejavuandroid.R;
+import dejavu.appzonegroup.com.dejavuandroid.ToastMessageHandler.ShowMessage;
 
 /**
  * Created by CrowdStar on 2/24/2015.
@@ -34,9 +34,12 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
         GridView gridView = (GridView) findViewById(R.id.main_function_grid);
+
         ZoneDataUtils.syncDB(MainActivity.this);
         final ArrayList<FunctionCategory> categories = FunctionCategory.getAllFunctionCategory(MainActivity.this);
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

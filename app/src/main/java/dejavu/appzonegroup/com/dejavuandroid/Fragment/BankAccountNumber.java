@@ -8,15 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import java.util.ArrayList;
-
 import dejavu.appzonegroup.com.dejavuandroid.Interfaces.AccountNumberVerificationListener;
-import dejavu.appzonegroup.com.dejavuandroid.Interfaces.AuthenticationListener;
-import dejavu.appzonegroup.com.dejavuandroid.Models.PasswordPinModel;
 import dejavu.appzonegroup.com.dejavuandroid.R;
 import dejavu.appzonegroup.com.dejavuandroid.ServerRequest.AccountNumberVerification;
-import dejavu.appzonegroup.com.dejavuandroid.ServerRequest.PasswordPinAuthentication;
-import dejavu.appzonegroup.com.dejavuandroid.ShellFramework.UserPhoneDetails.GeneralPreference;
 
 /**
  * Created by CrowdStar on 2/19/2015.
